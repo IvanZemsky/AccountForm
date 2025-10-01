@@ -20,9 +20,7 @@ export const useAccountFormStore = defineStore("account-form", () => {
     const forms: AccountFormsInLS[] = JSON.parse(data)
 
     return forms.map((form) => ({
-      tags: form.tags.reduce((acc, tag) => {
-        return acc + tag.text
-      }, ""),
+      tags: form.tags.map((tag) => tag.text).join(";"),
       type: form.type,
       login: form.login,
       password: form.password,
