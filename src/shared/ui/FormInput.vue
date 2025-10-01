@@ -16,6 +16,10 @@ type Props = {
   placeholder?: string
 }
 
+defineEmits<{
+  (e: "change"): void
+}>()
+
 const props = defineProps<Props>()
 </script>
 
@@ -34,11 +38,12 @@ const props = defineProps<Props>()
           :is="as"
           v-bind="componentField"
           class="grow resize-none max-h-15"
+          @change="$emit('change')"
           :placeholder="placeholder"
         />
       </FormControl>
       <FormDescription />
-      <FormMessage class="absolute bottom-[-20px]"/>
+      <FormMessage class="absolute bottom-[-20px]" />
     </FormItem>
   </FormField>
 </template>

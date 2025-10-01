@@ -20,6 +20,10 @@ type Props = {
 }
 
 const props = defineProps<Props>()
+
+defineEmits<{
+  (e: "change"): void
+}>()
 </script>
 
 <template>
@@ -31,7 +35,7 @@ const props = defineProps<Props>()
     :validateOnInput="false"
     :validateOnModelUpdate="false"
   >
-    <FormItem :class="props.class">
+    <FormItem :class="props.class" @change="$emit('change')">
       <FormControl>
         <UiSelect default-value="local" v-bind="componentField">
           <SelectTrigger class="grow w-[180px]">
