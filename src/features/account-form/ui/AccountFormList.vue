@@ -7,17 +7,13 @@ import AccountForm from "./account-form/AccountForm.vue"
 const formsStore = useAccountFormStore()
 const { forms } = storeToRefs(formsStore)
 
-function addForm() {
-  formsStore.addForm()
-}
-
 </script>
 
 <template>
   <div class="flex flex-col gap-4">
     <header class="flex items-center gap-1">
       <h1 class="text-xl font-bold">Учетные записи</h1>
-      <button @click="addForm">
+      <button @click="formsStore.addForm">
         <PlusIcon />
       </button>
     </header>

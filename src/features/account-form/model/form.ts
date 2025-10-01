@@ -7,7 +7,7 @@ export const AuthFormSchema = z
       .trim()
       .min(0)
       .max(50, { message: "Максимум 50 символов" })
-      .optional(),
+      .default(""),
     type: z.enum(["local", "ldap"], { message: "Выберите тип" }),
     login: z
       .string({ message: "Введите логин" })
@@ -37,3 +37,16 @@ export const AuthFormSchema = z
   })
 
 export type AccountFormData = z.infer<typeof AuthFormSchema>
+
+export type AccountFormsInLS = {
+  tags: { text: string }[]
+  type: "local" | "ldap"
+  login: string
+  password?: string | undefined
+}
+
+export function formatTags(tags: string) {
+  return tags.split(";").map((tag) => ({
+    text: tag.trim(),
+  }))
+}

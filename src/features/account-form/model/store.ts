@@ -1,13 +1,33 @@
 import { defineStore } from "pinia"
 import { ref, watch } from "vue"
-import type { AccountFormData } from "./form"
+import {
+  AuthFormSchema,
+  formatTags,
+  type AccountFormData,
+  type AccountFormsInLS,
+} from "./form"
 
 export const useAccountFormStore = defineStore("account-form", () => {
-  const forms = ref<AccountFormData[]>(
-    localStorage.getItem("account-forms")
-      ? JSON.parse(localStorage.getItem("account-forms") as string)
-      : [],
-  )
+  const forms = ref<AccountFormData[]>(loadFromLs())
+
+  function loadFromLs(): AccountFormData[] {
+    const data = localStorage.getItem("account-forms")
+
+    if (!data) {
+      return []
+    }
+
+    const forms: AccountFormsInLS[] = JSON.parse(data)
+
+    return forms.map((form) => ({
+      tags: form.tags.reduce((acc, tag) => {
+        return acc + tag.text
+      }, ""),
+      type: form.type,
+      login: form.login,
+      password: form.password,
+    }))
+  }
 
   function addForm() {
     forms.value.push({
@@ -18,8 +38,12 @@ export const useAccountFormStore = defineStore("account-form", () => {
     })
   }
 
-  function updateForm(index: number, newForm: AccountFormData) {
-    forms.value[index] = newForm
+  function updateFieldIfValid(index: number, values: AccountFormData) {
+    const parsed = AuthFormSchema.safeParse(values)
+
+    if (parsed.success) {
+      forms.value[index] = values
+    }
   }
 
   function removeFormByIndex(index: number) {
@@ -28,12 +52,19 @@ export const useAccountFormStore = defineStore("account-form", () => {
 
   watch(
     () => forms.value,
-    (value) => {
-      console.log("Сохранение в localStorage:", value)
-      localStorage.setItem("account-forms", JSON.stringify(value))
+    (forms) => {
+      const values: AccountFormsInLS[] = forms.map((form) => ({
+        tags: formatTags(form.tags),
+        type: form.type,
+        login: form.login,
+        password: form.password,
+      }))
+
+      console.log("Сохранение в localStorage:", values)
+      localStorage.setItem("account-forms", JSON.stringify(values))
     },
     { deep: true },
   )
 
-  return { forms, addForm, updateForm, removeFormByIndex }
+  return { forms, addForm, updateFieldIfValid, removeFormByIndex }
 })

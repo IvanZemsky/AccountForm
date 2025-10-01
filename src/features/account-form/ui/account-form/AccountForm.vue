@@ -14,17 +14,9 @@ type Props = {
   index: number
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
-const formsStore = useAccountFormStore()
-
-function updateFieldIfValid(values: AccountFormData) {
-  const parsed = AuthFormSchema.safeParse(values)
-
-  if (parsed.success) {
-    formsStore.updateForm(props.index, values)
-  }
-}
+const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
 </script>
 
 <template>
@@ -39,12 +31,12 @@ function updateFieldIfValid(values: AccountFormData) {
         :as="UiTextarea"
         name="tags"
         placeholder="XXXXXXX; IIIIII;"
-        @change="updateFieldIfValid(values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData)"
       />
 
       <TypeSelect
         name="type"
-        @change="updateFieldIfValid(values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData)"
       />
 
       <FormInput
@@ -52,7 +44,7 @@ function updateFieldIfValid(values: AccountFormData) {
         :as="UiInput"
         name="login"
         placeholder="Значение"
-        @change="updateFieldIfValid(values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData)"
       />
 
       <FormInput
@@ -61,10 +53,10 @@ function updateFieldIfValid(values: AccountFormData) {
         :as="UiInput"
         name="password"
         placeholder="Пароль"
-        @change="updateFieldIfValid(values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData)"
       />
 
-      <button type="button" @click="formsStore.removeFormByIndex(index)">
+      <button type="button" @click="removeFormByIndex(index)">
         <TrashIcon class="w-8 h-8" />
       </button>
     </div>
