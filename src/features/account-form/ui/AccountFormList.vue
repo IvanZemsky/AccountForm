@@ -24,6 +24,12 @@ const { forms } = storeToRefs(formsStore)
     </p>
 
     <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2 pr-[38px]">
+        <p class="w-55">Метки</p>
+        <p class="flex-1">Тип записи</p>
+        <p class="flex-1">Логин</p>
+        <p class="flex-1">Пароль</p>
+      </div>
       <AccountForm
         v-for="(form, index) in forms"
         :key="index"
