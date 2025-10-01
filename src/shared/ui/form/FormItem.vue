@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { HTMLAttributes } from "vue"
-import { useId } from "reka-ui"
-import { provide } from "vue"
+import type { HTMLAttributes } from 'vue'
+import { useId } from 'reka-ui'
+import { provide } from 'vue'
 import { cn } from '@/shared/lib/css'
-import { FORM_ITEM_INJECTION_KEY } from "./injectionKeys"
+import { FORM_ITEM_INJECTION_KEY } from './injectionKeys'
 
 const props = defineProps<{
-  class?: HTMLAttributes["class"]
+  class?: HTMLAttributes['class']
 }>()
 
 const id = useId()
@@ -14,7 +14,7 @@ provide(FORM_ITEM_INJECTION_KEY, id)
 </script>
 
 <template>
-  <div data-slot="form-item" :class="cn('flex', props.class)">
+  <div data-slot="form-item" :class="cn('relative flex flex-col gap-1', props.class)">
     <slot />
   </div>
 </template>

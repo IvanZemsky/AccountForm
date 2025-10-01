@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { AccountInputs } from "@/features/account-form";
-import "./styles/index.css"
+import { AccountInputs } from '@/features/account-form'
+import './styles/index.css'
 </script>
 
 <template>

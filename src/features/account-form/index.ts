@@ -1,1 +1,1 @@
-export {default as AccountInputs} from './ui/AccountInputs.vue'
+export { default as AccountInputs } from './ui/account-inputs/AccountInputs.vue'
