@@ -7,16 +7,13 @@ import {
   FormDescription,
   FormMessage,
   UiSelect,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-  SelectGroup,
 } from "@/shared/ui"
+import type { AcceptableValue } from "reka-ui"
 
 type Props = {
   name: string
   class?: HTMLAttributes["class"]
+  defaultValue?:  AcceptableValue | AcceptableValue[] | undefined
 }
 
 const props = defineProps<Props>()
@@ -34,15 +31,7 @@ defineEmits<{
     <FormItem :class="props.class" @change="$emit('change')">
       <FormControl>
         <UiSelect default-value="local" v-bind="componentField">
-          <SelectTrigger class="grow w-[180px]">
-            <SelectValue placeholder="Значение" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="ldap">LDAP</SelectItem>
-              <SelectItem value="local">Локальная</SelectItem>
-            </SelectGroup>
-          </SelectContent>
+          <slot/>
         </UiSelect>
       </FormControl>
       <FormDescription />

@@ -44,9 +44,3 @@ export type AccountFormsInLS = {
   login: string
   password?: string | undefined
 }
-
-export function formatTags(tags: string) {
-  return tags.split(";").map((tag) => ({
-    text: tag.trim(),
-  }))
-}

@@ -2,11 +2,10 @@
 import { PlusIcon } from "lucide-vue-next"
 import { storeToRefs } from "pinia"
 import { useAccountFormStore } from "../model/store"
-import AccountForm from "./account-form/AccountForm.vue"
+import AccountForm from "./AccountForm.vue"
 
 const formsStore = useAccountFormStore()
 const { forms } = storeToRefs(formsStore)
-
 </script>
 
 <template>
@@ -30,6 +29,7 @@ const { forms } = storeToRefs(formsStore)
         <p class="flex-1">Логин</p>
         <p class="flex-1">Пароль</p>
       </div>
+      
       <AccountForm
         v-for="(form, index) in forms"
         :key="index"

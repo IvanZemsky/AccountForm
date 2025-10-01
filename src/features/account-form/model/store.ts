@@ -1,31 +1,10 @@
 import { defineStore } from "pinia"
 import { ref, watch } from "vue"
-import {
-  AuthFormSchema,
-  formatTags,
-  type AccountFormData,
-  type AccountFormsInLS,
-} from "./form"
+import { AuthFormSchema, type AccountFormData } from "./form"
+import { loadFormsFromLS, saveFormsToLS } from "./local-storage"
 
 export const useAccountFormStore = defineStore("account-form", () => {
-  const forms = ref<AccountFormData[]>(loadFromLs())
-
-  function loadFromLs(): AccountFormData[] {
-    const data = localStorage.getItem("account-forms")
-
-    if (!data) {
-      return []
-    }
-
-    const forms: AccountFormsInLS[] = JSON.parse(data)
-
-    return forms.map((form) => ({
-      tags: form.tags.map((tag) => tag.text).join(";"),
-      type: form.type,
-      login: form.login,
-      password: form.password,
-    }))
-  }
+  const forms = ref<AccountFormData[]>(loadFormsFromLS())
 
   function addForm() {
     forms.value.push({
@@ -36,7 +15,11 @@ export const useAccountFormStore = defineStore("account-form", () => {
     })
   }
 
-  function updateFieldIfValid(index: number, values: AccountFormData, validate: () => void) {
+  function updateFieldIfValid(
+    index: number,
+    values: AccountFormData,
+    validate: () => void,
+  ) {
     validate()
     const parsed = AuthFormSchema.safeParse(values)
 
@@ -49,21 +32,7 @@ export const useAccountFormStore = defineStore("account-form", () => {
     forms.value.splice(index, 1)
   }
 
-  watch(
-    () => forms.value,
-    (forms) => {
-      const values: AccountFormsInLS[] = forms.map((form) => ({
-        tags: formatTags(form.tags),
-        type: form.type,
-        login: form.login,
-        password: form.password,
-      }))
-
-      console.log("Сохранение в localStorage:", values)
-      localStorage.setItem("account-forms", JSON.stringify(values))
-    },
-    { deep: true },
-  )
+  watch(forms, () => saveFormsToLS(forms.value), { deep: true })
 
   return { forms, addForm, updateFieldIfValid, removeFormByIndex }
 })

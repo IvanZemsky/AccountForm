@@ -2,10 +2,17 @@
 import { UiInput, UiTextarea, FormInput } from "@/shared/ui"
 import { toTypedSchema } from "@vee-validate/zod"
 import { TrashIcon } from "lucide-vue-next"
-import { AuthFormSchema, type AccountFormData } from "../../model/form"
+import { AuthFormSchema, type AccountFormData } from "../model/form"
 import { Form } from "vee-validate"
-import TypeSelect from "./TypeSelect.vue"
-import { useAccountFormStore } from "../../model/store"
+import {
+  FormSelect,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui"
+import { useAccountFormStore } from "../model/store"
 
 const formSchema = toTypedSchema(AuthFormSchema)
 
@@ -21,8 +28,8 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
 
 <template>
   <Form
-    :initial-values="data"
     v-slot="{ values, validate }"
+    :initial-values="data"
     :validation-schema="formSchema"
   >
     <div class="flex items-center gap-2">
@@ -34,10 +41,20 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         @change="updateFieldIfValid(index, values as AccountFormData, validate)"
       />
 
-      <TypeSelect
+      <FormSelect
         name="type"
         @change="updateFieldIfValid(index, values as AccountFormData, validate)"
-      />
+      >
+        <SelectTrigger class="grow w-[180px]">
+          <SelectValue placeholder="Значение" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectItem value="ldap">LDAP</SelectItem>
+            <SelectItem value="local">Локальная</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </FormSelect>
 
       <FormInput
         class="grow"
