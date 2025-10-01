@@ -22,7 +22,7 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
 <template>
   <Form
     :initial-values="data"
-    v-slot="{ values }"
+    v-slot="{ values, validate }"
     :validation-schema="formSchema"
   >
     <div class="flex items-center gap-2">
@@ -31,12 +31,12 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         :as="UiTextarea"
         name="tags"
         placeholder="XXXXXXX; IIIIII;"
-        @change="updateFieldIfValid(index, values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
       />
 
       <TypeSelect
         name="type"
-        @change="updateFieldIfValid(index, values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
       />
 
       <FormInput
@@ -44,7 +44,7 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         :as="UiInput"
         name="login"
         placeholder="Значение"
-        @change="updateFieldIfValid(index, values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
       />
 
       <FormInput
@@ -53,7 +53,7 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         :as="UiInput"
         name="password"
         placeholder="Пароль"
-        @change="updateFieldIfValid(index, values as AccountFormData)"
+        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
       />
 
       <button type="button" @click="removeFormByIndex(index)">

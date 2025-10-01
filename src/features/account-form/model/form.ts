@@ -26,7 +26,7 @@ export const AuthFormSchema = z
       if (!data.password) {
         ctx.addIssue({
           code: "custom",
-          message: "Введите пароль для локального аккаунта",
+          message: "Введите пароль",
           path: ["password"],
         })
       }

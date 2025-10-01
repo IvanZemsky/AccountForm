@@ -30,10 +30,6 @@ defineEmits<{
   <FormField
     v-slot="{ componentField }"
     :name="name"
-    :validateOnBlur="true"
-    :validateOnChange="false"
-    :validateOnInput="false"
-    :validateOnModelUpdate="false"
   >
     <FormItem :class="props.class" @change="$emit('change')">
       <FormControl>

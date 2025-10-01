@@ -38,7 +38,8 @@ export const useAccountFormStore = defineStore("account-form", () => {
     })
   }
 
-  function updateFieldIfValid(index: number, values: AccountFormData) {
+  function updateFieldIfValid(index: number, values: AccountFormData, validate: () => void) {
+    validate()
     const parsed = AuthFormSchema.safeParse(values)
 
     if (parsed.success) {

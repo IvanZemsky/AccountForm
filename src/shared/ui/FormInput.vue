@@ -24,21 +24,19 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <FormField
-    v-slot="{ componentField }"
-    :name="name"
-    :validateOnBlur="true"
-    :validateOnChange="false"
-    :validateOnInput="false"
-    :validateOnModelUpdate="false"
-  >
+  <FormField v-slot="{ componentField, validate }" :name="name">
     <FormItem :class="cn(props.class)">
       <FormControl>
         <component
           :is="as"
           v-bind="componentField"
           class="grow resize-none max-h-15"
-          @change="$emit('change')"
+          @change="
+            () => {
+              $emit('change')
+              validate()
+            }
+          "
           :placeholder="placeholder"
         />
       </FormControl>
