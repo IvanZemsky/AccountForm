@@ -1,5 +1,6 @@
 export { UiInput } from "./input"
 export {
+  UiForm,
   FormField,
   FormControl,
   FormDescription,

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { UiInput, UiTextarea, FormInput } from "@/shared/ui"
+import { UiInput, UiTextarea, FormInput, UiForm } from "@/shared/ui"
 import { toTypedSchema } from "@vee-validate/zod"
 import { TrashIcon } from "lucide-vue-next"
 import { AuthFormSchema, type AccountFormData } from "../model/form"
-import { Form } from "vee-validate"
 import {
   FormSelect,
   SelectContent,
@@ -27,7 +26,7 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
 </script>
 
 <template>
-  <Form
+  <UiForm
     v-slot="{ values, validate }"
     :initial-values="data"
     :validation-schema="formSchema"
@@ -77,5 +76,5 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         <TrashIcon class="w-8 h-8" />
       </button>
     </div>
-  </Form>
+  </UiForm>
 </template>
