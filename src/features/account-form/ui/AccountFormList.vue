@@ -29,13 +29,8 @@ const { forms } = storeToRefs(formsStore)
         <p class="flex-1">Логин</p>
         <p class="flex-1">Пароль</p>
       </div>
-      
-      <AccountForm
-        v-for="(form, index) in forms"
-        :key="index"
-        :index="index"
-        :data="form"
-      />
+
+      <AccountForm v-for="form in forms" :key="form.id" :data="form" />
     </div>
   </div>
 </template>

@@ -10,6 +10,7 @@ export function loadFormsFromLS(): AccountFormData[] {
   const forms: AccountFormsInLS[] = JSON.parse(data)
 
   return forms.map((form) => ({
+    id: form.id,
     tags: form.tags.map((tag) => tag.text).join(";"),
     type: form.type,
     login: form.login,
@@ -19,6 +20,7 @@ export function loadFormsFromLS(): AccountFormData[] {
 
 export function saveFormsToLS(forms: AccountFormData[]) {
   const values: AccountFormsInLS[] = forms.map((form) => ({
+    id: form.id,
     tags: formatTagsForLS(form.tags),
     type: form.type,
     login: form.login,

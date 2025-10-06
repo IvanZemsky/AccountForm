@@ -2,6 +2,7 @@ import { z } from "zod"
 
 export const AuthFormSchema = z
   .object({
+    id: z.number(),
     tags: z
       .string()
       .trim()
@@ -39,6 +40,7 @@ export const AuthFormSchema = z
 export type AccountFormData = z.infer<typeof AuthFormSchema>
 
 export type AccountFormsInLS = {
+  id: number
   tags: { text: string }[]
   type: "local" | "ldap"
   login: string

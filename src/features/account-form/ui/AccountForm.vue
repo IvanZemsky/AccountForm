@@ -17,12 +17,11 @@ const formSchema = toTypedSchema(AuthFormSchema)
 
 type Props = {
   data: AccountFormData
-  index: number
 }
 
 defineProps<Props>()
 
-const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
+const { updateFieldIfValid, removeFormById} = useAccountFormStore()
 </script>
 
 <template>
@@ -37,12 +36,12 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         :as="UiTextarea"
         name="tags"
         placeholder="XXXXXXX; IIIIII;"
-        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
+        @change="updateFieldIfValid(data.id, values as AccountFormData, validate)"
       />
 
       <FormSelect
         name="type"
-        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
+        @change="updateFieldIfValid(data.id, values as AccountFormData, validate)"
       >
         <SelectTrigger class="grow w-[180px]">
           <SelectValue placeholder="Значение" />
@@ -60,7 +59,7 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         :as="UiInput"
         name="login"
         placeholder="Значение"
-        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
+        @change="updateFieldIfValid(data.id, values as AccountFormData, validate)"
       />
 
       <FormInput
@@ -69,10 +68,10 @@ const { updateFieldIfValid, removeFormByIndex } = useAccountFormStore()
         :as="UiInput"
         name="password"
         placeholder="Пароль"
-        @change="updateFieldIfValid(index, values as AccountFormData, validate)"
+        @change="updateFieldIfValid(data.id, values as AccountFormData, validate)"
       />
 
-      <button type="button" @click="removeFormByIndex(index)">
+      <button type="button" @click="removeFormById(data.id)">
         <TrashIcon class="w-8 h-8" />
       </button>
     </div>
